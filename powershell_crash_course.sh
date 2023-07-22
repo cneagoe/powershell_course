@@ -32,7 +32,7 @@ New-Service -Name "myservice" -BinaryFilePathName "C:\path\to\your\service.exe"
 # help
 Help *log*
 Help *event*
-# help interpret output
+# help interpret output, optional parameters, positional and mandatory
 # Most commands can work in a variety of different ways, depending on what you need
 # them to do. For example, here’s the syntax section for the 
 # Get-EventLog help:
@@ -55,8 +55,7 @@ Help *event*
 # you’re locked into that set and can only use additional parameters that appear within that same set. 
 # If I choose to use -List, then the only other parameters I can use are -AsString and -ComputerName, 
 # because those are the only other parameters included in the parameter set where -List lives. 
-# I couldn’t add in the -LogName parameter, because it doesn’t live in the first parameter set. 
-# That means -List and -LogName are mutually exclusive—you’ll never use both of them at the same time, 
+# -List and -LogName are mutually exclusive you’ll never use both of them at the same time, 
 # because they live in different parameter sets.
 # Sometimes it’s possible to run a command with only parameters that are shared between multiple sets. 
 # In those cases, the shell will usually select the first-listed parameter set. 
@@ -69,3 +68,28 @@ Help *event*
 # You don’t have to use it at all, the cmdlet will probably default to the local computer if you don’t specify an alternative. 
 # That’s also why [<Common-Parameters>] is in square brackets—you can run the command without using any of the common parameters.
 # Almost every cmdlet has at least one optional parameter. 
+
+# PowerShell’s designers knew that some parameters would be used so frequently that you wouldn’t want to continually type the parameter name. 
+# Those commonly used parameters are often positional, meaning that you can provide a value without typing the parameter’s name, 
+# provided you put that value in the correct position.
+# There are two ways to identify a positional parameter. 
+# The first way is right in the syntax summary: 
+# the parameter name—just the name—will be surrounded by those square brackets. 
+# For example, look at the first two parameters in the second parameter set of Get-EventLog:
+
+# [-LogName] <string> [[-InstanceId] <Int64[]>]
+
+# The first parameter, -LogName, isn’t optional. 
+# I can tell because the entire parameter—its name and its value—aren’t surrounded by square brackets. 
+# The parameter name, however, is enclosed in square brackets, so that’s a positional parameter. 
+# I could provide the log name without having to type -LogName. 
+# Because this appears in the first position within the help file, 
+# I know that the log name is the first parameter I have to provide.
+# The second parameter, -InstanceId, is optional—both it and its value are enclosed in square brackets. 
+# Within those, -InstanceId itself is also contained in square brackets, 
+# indicating that this is also a positional parameter. 
+# It appears in the second position, 
+# so I would need to provide a value in the second position if I chose to omit the parameter name.
+# Seccond way is to run 
+# Help Get-EventLog -full
+# and check the required attribute of the parameter you're interested in

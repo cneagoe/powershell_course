@@ -119,15 +119,22 @@ Diff -reference (Import-CliXML reference.xml) -difference (Get-Process) -propert
 # I probably could have shortened them even further to something like -ref and -diff, 
 # and the command would still have worked.
 
-# Object—This is what I’ve been calling a “table row.” It represents a single thing,
-# like a single process or a single service.
 
-# Property—This is what I called a “table column.” It represents one piece of infor-
-# mation about an object, like a process name, process ID, or service status.
+# What do all the tables mean :
+# Object—This is a “table row.” It represents a single thing, like a single process or a single service.
+# Property—This is a “table column.” It represents one piece of information about an object, like a process name, process ID, or service status.
+# Method—This is an “action.” A method is related to a single object and makes that object do something, like killing a process or starting a service.
+# Collection—This is the entire set of objects, or a “table.”
 
-# Method—This is what I called an “action.” A method is related to a single object
-# and makes that object do something, like killing a process or starting a service.
-
-# Collection—This is the entire set of objects, or what I’ve been calling a “table.”
-
+# see explicit details about the objects returned by a cmdlet
 Get-Process | Get-Member
+
+# sorting objects
+Get-Process | Sort-Object -property VM
+# short form
+Get-Process | Sort VM,ID -desc
+
+# select the properties you want
+Get-Process | Select-Object -property Name,ID,VM,PM | Convert-ToHTML | Out-File test2.html
+
+

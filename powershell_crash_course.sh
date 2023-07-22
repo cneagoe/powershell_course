@@ -1,3 +1,6 @@
+# intro
+# similarities to .NET
+
 # Managing files and folders
 # Get-ChildItem (for Dir, Ls)
 Get-ChildItem -Path C:\
@@ -18,8 +21,6 @@ Copy-Item -Path C:\Destination\file.txt -Destination C:\Source
 # Remove-Item (for Del, Rm, RmDir)
 Remove-Item -Path C:\Source\file.txt
 
-# pattern verb-noun
-
 # get the status of processes
 Get-Process -Name notepad
 # get the status of services
@@ -28,6 +29,8 @@ Get-Service -Name wuauserv
 Get-EventLog -LogName System -Newest 10
 # create a new service (don't run this)
 New-Service -Name "myservice" -BinaryFilePathName "C:\path\to\your\service.exe"
+
+# pattern verb-noun
 
 # help
 Help *log*
@@ -93,3 +96,38 @@ Help *event*
 # Seccond way is to run 
 # Help Get-EventLog -full
 # and check the required attribute of the parameter you're interested in
+
+# pipe 
+# feeding output of one command to another command
+Get-Process | Export-CSV procs.csv
+Get-Process | Export-CliXML reference.xml
+Dir | Out-File DirectoryList.txt
+Get-Service | ConvertTo-HTML | Out-File services.html
+
+# paranthesis 
+# feeding the output of one command to the parameters of another
+Diff -reference (Import-CliXML reference.xml) -difference (Get-Process) -property Name
+
+# Just like in math, parentheses in PowerShell control the order of execution. 
+# In this example, they force Import-CliXML and Get-Process to run before Diff runs. 
+# The output from Import-CLI is fed to the -reference parameter, 
+# and the output from Get-Process is fed to the -difference parameter.
+# Actually, those parameter names are -referenceObject and -difference-Object; 
+# keep in mind that you can abbreviate parameter names by typing just enough of their names 
+# for the shell to be able to figure out which one you meant. 
+# In this case, -reference and -difference are more than enough to uniquely identify these parameters. 
+# I probably could have shortened them even further to something like -ref and -diff, 
+# and the command would still have worked.
+
+# Object—This is what I’ve been calling a “table row.” It represents a single thing,
+# like a single process or a single service.
+
+# Property—This is what I called a “table column.” It represents one piece of infor-
+# mation about an object, like a process name, process ID, or service status.
+
+# Method—This is what I called an “action.” A method is related to a single object
+# and makes that object do something, like killing a process or starting a service.
+
+# Collection—This is the entire set of objects, or what I’ve been calling a “table.”
+
+Get-Process | Get-Member

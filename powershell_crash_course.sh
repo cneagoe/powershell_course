@@ -19,3 +19,12 @@ Copy-Item -Path C:\Destination\file.txt -Destination C:\Source
 Remove-Item -Path C:\Source\file.txt
 # pattern verb-noun
 # help pages
+
+# get the status of processes
+Get-Process -Name notepad
+# get the status of services
+Get-Service -Name wuauserv
+# get events and event logs
+Get-EventLog -LogName System -Newest 10
+# create a new service (don't run this)
+New-Service -Name "myservice" -BinaryFilePathName "C:\path\to\your\service.exe"

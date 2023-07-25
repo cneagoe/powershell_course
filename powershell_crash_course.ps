@@ -28,9 +28,13 @@ Get-Service -Name wuauserv
 # get events and event logs
 Get-EventLog -LogName System -Newest 10
 # create a new service (don't run this)
-New-Service -Name "myservice" -BinaryFilePathName "C:\path\to\your\service.exe"
+# New-Service -Name "myservice" -BinaryFilePathName "C:\path\to\your\service.exe"
 
 # pattern verb-noun
+
+# splitting commands on multiple lines
+Get-EventLog -LogName `
+System -Newest 10
 
 # help
 Help *log*
